@@ -3,6 +3,8 @@
 const fontSizeControl = document.querySelector("#font-size-control");
 const spanText = document.querySelector("#text");
 
+spanText.style.fontSize = `${fontSizeControl.value}px`; // ініціалізація значення розміру шрифта на старті скрипта (плавна зміна розміру)
+
 fontSizeControl.addEventListener("input", (e) => {
   spanText.style.fontSize = `${e.currentTarget.value}px`;
 });
