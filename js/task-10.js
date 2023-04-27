@@ -22,24 +22,57 @@ inputNamber.addEventListener("input", (e) => {
   amount = e.currentTarget.value;
 });
 
+// Варіант 1 ----------------------------------------------
+// function createBoxes(amount) {
+//   for (let i = 0; i < amount; i++) {
+//     let sizeElement = 30 + i * 10;
+//     divBoxes.insertAdjacentHTML(
+//       "beforeend",
+//       `<div style="width: ${sizeElement}px; height: ${sizeElement}px; background-color: ${getRandomHexColor()};"></div>`
+//     );
+//   }
+// }
+
+// function destroyBoxes() {
+//   divBoxes.innerHTML = "";
+// }
+
+// btnCreate.addEventListener("click", () => {
+//   createBoxes(amount);
+// });
+
+// btnDestroy.addEventListener("click", () => {
+//   destroyBoxes();
+// });
+
+// Варіант 2 (рекомендація ментора) ----------------------------------------------
+// функція створення "div"
 function createBoxes(amount) {
-  for (let i = 0; i < amount; i++) {
+  let summaryLine = "";
+  for (let i = 0; i < amount; i += Number(inputNamber.step)) {
     let sizeElement = 30 + i * 10;
-    divBoxes.insertAdjacentHTML(
-      "beforeend",
-      `<div style="width: ${sizeElement}px; height: ${sizeElement}px; background-color: ${getRandomHexColor()};"></div>`
-    );
+    summaryLine += `<div style="width: ${sizeElement}px; height: ${sizeElement}px; background-color: ${getRandomHexColor()};"></div>`;
   }
+  divBoxes.insertAdjacentHTML("beforeend", summaryLine); // додати в DOM за одну операцію
 }
 
+// функція видалення "div" та очищення вводу
 function destroyBoxes() {
-  divBoxes.innerHTML = "";
+  inputNamber.value = ""; // очищення "input"
+  divBoxes.innerHTML = ""; // очищення вмісту "div#boxes"
 }
 
+// виклик по події "click" функції створення "div", при умові, що значення "input" в діапазоні між мін і макс значеннями
 btnCreate.addEventListener("click", () => {
-  createBoxes(amount);
+  if (
+    Number(inputNamber.min) <= Number(inputNamber.value) &&
+    Number(inputNamber.value) <= Number(inputNamber.max)
+  ) {
+    createBoxes(amount);
+  }
 });
 
+// виклик по події "click" функції видалення "div"
 btnDestroy.addEventListener("click", () => {
   destroyBoxes();
 });
